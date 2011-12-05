@@ -13,9 +13,10 @@ Here are the ideas for the status board script.
 * [] Basecamp
 * [] Analytics (Google?)
 * [] Twitter
-* [] RSS
-* [] Bus / Train status - ?
+* [] RSS / News Feeds
+* [] Bus / Train / Traffic status
 * [] Radio - Spotify, Grooveshark, etc. Would play based off api.
 * [] Github Commit Logs
 * [] Github issues
 
+Basically anything that you always want to look at during the day.
