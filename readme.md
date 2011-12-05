@@ -18,6 +18,7 @@ Here are the ideas for the status board script.
 * [] Radio - Spotify, Grooveshark, etc. Would play based off api.
 * [] Github Commit Logs
 * [] Github issues
+* [] BitBucket API
 * [] Pancake Payments
 
 Basically anything that you always want to look at during the day.
