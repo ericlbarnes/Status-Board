@@ -4,7 +4,7 @@
 
 Here are the ideas for the status board script.
 
-1. Self Hosted
+1. Self Hosted and open source
 2. Simple and Elegant code
 3. Modular and easy to add new status widgets.
 
