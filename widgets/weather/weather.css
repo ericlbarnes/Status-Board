@@ -1,0 +1,18 @@
+.weather .column:first-child {
+	border-left: none;
+}
+.weather .column {
+	width: 24%;
+	float: left;
+	text-align: center;
+	border-left: 1px solid #666667;
+	margin: 0 0 10px;
+}
+.weather .column h2 {
+	font-size: 13px;
+	color: white;
+	font-weight: bold;
+	text-shadow: 1px 1px 1px black;
+	text-transform: uppercase;
+	margin-bottom: 5px;
+}
