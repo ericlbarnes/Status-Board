@@ -4,7 +4,7 @@ body {
 
 section {
 	color: #fff;
-	background: #494949;
+	background: #494949 url(ajax-loader-large.gif);
 	background: -moz-linear-gradient(top, #494949 0%, #222222 70%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#494949), color-stop(70%,#222222)); /* Chrome,Safari4+ */
 	background: -webkit-linear-gradient(top, #494949 0%,#222222 70%); /* Chrome10+,Safari5.1+ */

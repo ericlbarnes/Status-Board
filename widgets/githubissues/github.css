@@ -23,7 +23,7 @@
 }
 .github .name {
 	float: right;
-	color: #ACC314;
+	color: #FFA84C;
 }
 .github_medium .name {
 	float: right;
@@ -34,6 +34,6 @@
 }
 .github_medium .date {
 	float: right;
-	color: #fff;	
+	color: #fff;
 	padding: 0 5px 0 3px;
 }

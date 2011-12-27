@@ -7,7 +7,6 @@
 <div class="content github">
 	<ul class="github_medium">
 	<?php foreach ($data['commits'] as $key => $commit): ?>
-		<?php if ($key < 5): ?>
 		<li class="clearfix">
 			<div class="msg">
 				<?php echo HTML::link('http://github.com'.$commit['url'], Str::limit($commit['message'], 80)); ?>
@@ -19,7 +18,6 @@
 				<?php echo $commit['committer']['name'] ?>
 			</div>
 		</li>
-		<?php endif; ?>
 	<?php endforeach ?>
 	</ul>
 </div>
