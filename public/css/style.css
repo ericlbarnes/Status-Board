@@ -8,46 +8,25 @@ section {
 	position: relative;
 	border-radius: 5px;
 	-moz-border-radius: 5px;
-	border: 1px solid #111;
 	margin: 5px;
 	font: normal 12px/130% Verdana, Arial, Helvetica, sans-serif;
-	color: #fff;
 	margin-bottom: 10px;
 	overflow:hidden;
-	background: #494949;
-	background: -moz-linear-gradient(top, #494949 0%, #222222 70%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#494949), color-stop(70%,#222222)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top, #494949 0%,#222222 70%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top, #494949 0%,#222222 70%); /* Opera11.10+ */
-	background: -ms-linear-gradient(top, #494949 0%,#222222 70%); /* IE10+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#494949', endColorstr='#222222',GradientType=0 ); /* IE6-9 */
-	background: linear-gradient(top, #494949 0%,#222222 70%); /* W3C */
 	height: 200px;
 }
 
 header {
 	display: block;
-	background: #acc314;
-	background: -moz-linear-gradient(top, #acc314 0%, #7e900f 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#acc314), color-stop(100%,#7e900f));
-	background: -webkit-linear-gradient(top, #acc314 0%,#7e900f 100%);
-	background: -o-linear-gradient(top, #acc314 0%,#7e900f 100%);
-	background: -ms-linear-gradient(top, #acc314 0%,#7e900f 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#acc314', endColorstr='#7e900f',GradientType=0 );
-	background: linear-gradient(top, #acc314 0%,#7e900f 100%);
 	border-top-left-radius: 5px 5px;
 	border-top-right-radius: 5px 5px;
 	-webkit-border-top-left-radius: 5px 5px;
 	-webkit-border-top-right-radius: 5px 5px;
 	padding:8px 0px 8px 8px;
-	border-bottom: 1px solid #111;
 }
 
 .content {
 	padding: 20px 2px 0;
-	border-top: 1px solid #666667;
 	padding: 5px 0;
-	color: white;
 }
 
 .small {
@@ -55,7 +34,8 @@ header {
 	min-width: 200px;
 }
 .medium {
-	width: 62.5%;
+	width: 60.8%;
+	height: 300px;
 }
 .large {
 	width: 95%;

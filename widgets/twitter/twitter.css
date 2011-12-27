@@ -20,8 +20,12 @@
 }
 .twitter .msg {
 	float: left;
+	min-width: 150px;
+	width: 75%;
 }
 .twitter .name {
 	float: right;
-	color: #ACC314;
+	color: #FFA84C;
+	text-align: left;
+	width: 20%;
 }

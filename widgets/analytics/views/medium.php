@@ -1,3 +1,7 @@
+<style>
+	<?php echo $css; ?>
+</style>
+<div class="analytics">
 <header>
 	<h1>Visitor Analytics</h1>
 </header>
@@ -33,4 +37,5 @@
 			</div>
 		</div>
 	<?php endif ?>
+</div>
 </div>

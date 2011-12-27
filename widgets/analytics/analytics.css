@@ -1,0 +1,42 @@
+.chart {
+	float: left;
+	width: 540px;
+}
+.analytics_details {
+	float: right;
+	width: 25%;
+}
+.analytics_details h2 {
+	font: normal 16px/130% Verdana, Arial, Helvetica, sans-serif;
+	margin: 0 0 0 20px;
+	line-height: 40px;
+	padding-left: 10px;
+	padding-bottom: 0;
+}
+.box {
+	padding: 5px 15px;
+	margin: 20px 0 0 0;
+	text-align: center;
+	width: 150px;
+	position: relative;
+	border: 1px solid black;
+	background: black;
+	border-image: initial;
+	border-radius: 5px;
+}
+.box h2 {
+	font-size: 20px;
+	margin: 0 10px 0 0;
+	padding: 0;
+	color: #ACC314;
+	line-height: 30px;
+}
+.box h5 {
+	font-size: 12px;
+	color: white;
+	text-transform: uppercase;
+	font-weight: normal;
+	margin: 0;
+	padding: 0;
+	line-height: 30px;
+}

@@ -131,7 +131,8 @@ class Analytics_Home_Controller extends Controller {
 			->with('max', max($visits))
 			->with('change', $change)
 			->with('avg_visits', $avg_visits > 1000 ? floor($avg_visits/1000) . 'K' : $avg_visits)
-			->with('current_month_visits', $current_month_visits);
+			->with('current_month_visits', $current_month_visits)
+			->with('css', File::get(BUNDLE_PATH.'analytics/analytics.css'));
 		exit($view);
 	}
 }
