@@ -22,11 +22,11 @@
 		<section class="small" data-user="laravel" data-project="laravel" data-label="open" data-widget="githubissues"></section>
 		<section class="small" data-search="laravel" data-widget="twitter"></section>
 
-		<section class="medium" data-user="laravel" data-project="laravel" data-branch="skunkworks" data-widget="githubcommits"></section>
+		<section class="small" data-user="laravel" data-project="laravel" data-branch="skunkworks" data-widget="githubcommits"></section>
 		<section class="small" data-search="helpspot" data-widget="twitter"></section>
 
-		<section class="medium" data-widget="analytics"></section>
-		<section class="small" data-search="userscape" data-widget="twitter"></section>
+		<!--<section class="medium" data-widget="analytics"></section>-->
+		<section class="small" data-search="ericlbarnes" data-widget="twitter"></section>
 
 	</div>
 	<script>
