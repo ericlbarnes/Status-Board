@@ -23,6 +23,14 @@ Here are the ideas for the status board script.
 
 Basically anything that you always want to look at during the day.
 
+## Installation
+
+Currently installation is pretty easy. Upload the files and visit yoursite.com/index.php and all the active widgets should load in. To manage the widgets you can edit the application/views/home/index.php and change the values.
+
+I decided to use html data attributes for the first release just to keep it simple. Future versions will probably include some form of storage and better ways of inserting the widget settings.
+
+Remember this is alpha code so use at your own risk.
+
 ## Help Out
 
 If you are interested in helping out let me know. The more help the better ;) I haven't figured the best route for
