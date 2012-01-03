@@ -1,0 +1,25 @@
+.stocks {
+	text-align: center;
+}
+
+.stocks h2, .stocks h2 span {
+	font-size: 60px;
+	line-height: 60px;
+	margin: 20px 0;
+}
+
+.stocks h2 span {
+	font-weight: normal;
+}
+
+.stocks h2 span.up {
+	color: #127935;
+}
+
+.stocks h2 span.down {
+	color: #a62f19;
+}
+
+.stocks .time {
+	font-size: 20px;
+}
