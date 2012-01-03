@@ -57,6 +57,6 @@ class Stocks_Home_Controller extends Controller {
 		// Decode JSON data
 		$json_output = json_decode($data, true);
 
-                return $json_output;
+		return $json_output;
 	}
 }
