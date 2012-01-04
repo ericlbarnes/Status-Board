@@ -24,6 +24,7 @@
 
 		<section class="small" data-user="laravel" data-project="laravel" data-branch="skunkworks" data-widget="githubcommits"></section>
 		<section class="small" data-search="helpspot" data-widget="twitter"></section>
+		<section class="small" data-exchange="NASDAQ" data-symbol="GOOG" data-widget="stocks"></section>
 
 		<!--<section class="medium" data-widget="analytics"></section>-->
 		<section class="small" data-search="ericlbarnes" data-widget="twitter"></section>
