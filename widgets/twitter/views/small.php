@@ -10,7 +10,7 @@
 		<?php if ($key < 5): ?>
 		<li class="clearfix">
 			<div class="msg">
-				<?php echo HTML::link('http://twitter.com/'.$item->from_user.'/status/'.$item->id, Str::limit($item->text, 40)); ?>
+				<?php echo HTML::link('http://twitter.com/'.$item->from_user.'/status/'.$item->id_str, Str::limit($item->text, 40)); ?>
 			</div>
 			<div class="name">
 				<?php echo $item->from_user ?>
