@@ -27,7 +27,7 @@ class Stocks_Home_Controller extends Controller {
 	{
 		$url = "http://finance.google.com/finance/info?client=ig&q={$exchange}:{$symbol}";
 
-		$quote = file_get_contents($url);
+		$quote = @file_get_contents($url);
 
 		// Remove CR's from ouput - make it one line
 		$json = str_replace('\n', '', $quote);
