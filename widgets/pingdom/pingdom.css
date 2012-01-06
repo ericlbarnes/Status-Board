@@ -1,0 +1,76 @@
+.pingdom ul {
+	height: 142px;
+	overflow: auto;
+	list-style: none;
+	list-style-image: none;
+	padding: 0;
+	margin: 0;
+}
+.pingdom ul li:first-child {
+	border-left: none;
+}
+.pingdom li {
+	height: 120px;
+	widgth: 200px;
+	padding: 9px 10px;
+	border-left: 1px solid #666667;
+	width: 160px;
+	padding: 10px;
+	position: relative;
+	line-height: 120%;
+	display: inline-block;
+	vertical-align: top;
+}
+
+section.large .pingdom li {width: 260px}
+section.medium .pingdom li {width: 258px}
+section.small .pingdom li {width: 258px}
+
+
+.pingdom .msg {
+	float: left;
+	min-width: 20px;
+}
+
+.pingdom .status {
+	float: left;
+	width: 38px;
+	height: 38px;
+}
+
+.pingdom .status.up {
+        width: 0;
+        height: 0;
+        border-left: 30px solid transparent;
+        border-right: 30px solid transparent;
+
+        border-bottom: 30px solid #77AB13;
+}
+
+.pingdom .status.down {
+        width: 0;
+        height: 0;
+        border-left: 30px solid transparent;
+        border-right: 30px solid transparent;
+
+        border-top: 30px solid #a62f19;
+}
+
+.pingdom .up a {font-size: 2em; color:#77AB13}
+.pingdom .down a{font-size: 2em; color:#a62f19}
+.pingdom .unconfirmed_down a, .pingdom .unknown a, .pingdom .paused a {font-size: 2em; color: #FFA84C}
+
+.pingdom .name {
+	float: right;
+	color: #FFA84C;
+	text-align: left;
+	width: 20%;
+}
+
+.b-server-time { margin-top: 20px; }
+.b-server-downtime {float: left;max-width: 150px;min-width: 90px;padding: 5px 10px 5px 0;}
+.b-server-uptime {float: left;padding: 5px 0 5px 0;}
+.t-small {color: #777;}
+.t-main {color: #D3D4D4;text-shadow: 1px 1px 1px #3F3F3F, -1px -1px 1px #3F3F3F;}
+.t-size-x11 {font-size: 11px;}
+.t-size-x18 {font-size: 18px;}
