@@ -29,6 +29,10 @@ header {
 	padding: 5px 0;
 }
 
+.tiny {
+	width: 14.5%;
+	min-width: 200px;
+}
 .small {
 	width: 30%;
 	min-width: 200px;
