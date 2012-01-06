@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * Wrapper class around the Twitter Search API for PHP
  * Based on the class originally developed by David Billingham
