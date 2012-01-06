@@ -4,11 +4,13 @@ class Stocks_Home_Controller extends Controller {
 
 	public function action_index()
 	{
-		$view_file = 'stocks::'.Input::get('size', 'small');
+		$size = Input::get('size', 'small');
 		$exchange = Input::get('exchange', 'NASDAQ');
 		$symbol = Input::get('symbol', 'GOOG');
 
 		$stock_data = $this->_get_data($exchange, $symbol);
+
+		$view_file = 'stocks::'.$size;
 
 		$view = View::make($view_file)
 			->with('exchange', $exchange)
