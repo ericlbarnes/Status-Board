@@ -7,6 +7,19 @@ class Stocks_Home_Controller extends Controller {
 		$size = Input::get('size', 'small');
 		$exchange = Input::get('exchange', 'NASDAQ');
 		$symbol = Input::get('symbol', 'GOOG');
+		$config_key = Input::get('config');
+		
+		if (!empty($config_key))
+		{
+			$settings = Config::get('widgets.'.$config_key);
+			if (!empty($settings)) {
+				$exchange = $settings['exchange'];
+				$symbol = $settings['symbol'];
+			}
+			else {
+				echo "No available settings";
+			}
+		}
 
 		$stock_data = $this->_get_data($exchange, $symbol);
 

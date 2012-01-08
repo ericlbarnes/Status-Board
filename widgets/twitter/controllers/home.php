@@ -23,8 +23,21 @@ class Twitter_Home_Controller extends Controller {
 	{
 		$view_file = 'twitter::'.Input::get('size', 'small');
 		$search = Input::get('search', 'laravel');
+		$config_key = Input::get('config');
+		
+		if (!empty($config_key))
+		{
+			$settings = Config::get('widgets.'.$config_key);
+			if (!empty($settings)) {
+				$search = $settings['search'];
+			}
+			else {
+				echo "No available settings";
+			}
+		}
+		
 		$twitter_search = new Twittersearch($search);
-
+		
 		$view = View::make($view_file)
 			->with('search', $search)
 			->with('messages', $twitter_search->results())

@@ -29,6 +29,21 @@ class Githubissues_Home_Controller extends Controller {
 		$user = Input::get('user');
 		$project = Input::get('project');
 		$label = Input::get('label', 'closed');
+		$config_key = Input::get('config');
+		
+		if (!empty($config_key))
+		{
+			$settings = Config::get('widgets.'.$config_key);
+			if (!empty($settings)) {
+				$user    = $settings['user'];
+				$project = $settings['project'];
+				$label   = $settings['label'];
+			}
+			else {
+				echo "No available settings";
+			}
+		}
+
 		$issues = $this->github->getIssueApi()->getList($user, $project, $label);
 		
 		$view = View::make($view_file)

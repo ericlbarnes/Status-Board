@@ -76,6 +76,21 @@ class Analytics_Home_Controller extends Controller {
 		$email = Input::get('email');
 		$password = Input::get('password');
 		$profile_id = Input::get('profile_id');
+		$config_key = Input::get('config');
+		
+		if (!empty($config_key))
+		{
+			$settings = Config::get('widgets.'.$config_key);
+			if (!empty($settings)) {
+				$email      = $settings['email'];
+				$password   = $settings['password'];
+				$profile_id = $settings['profile_id'];
+				$config_key = $settings['config'];
+			}
+			else {
+				echo "No available settings";
+			}
+		}
 
 		$dimensions = array('date');
 		$metrics    = array('visits');
