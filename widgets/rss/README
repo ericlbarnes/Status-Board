@@ -1,0 +1,33 @@
+Name: Authentic Jobs widget
+
+Author: Jeff Madsen (www.codebyjeff.com)
+
+Date: 2012-01-07
+
+Version: 1.0
+
+This widget allow you to keep an eye on Cameron Moll's Authenticjobs.com job board, creating your own search agent.
+
+In the main application/views/home/index.php, add:
+
+<section class="small" data-location="Anywhere" data-widget="authenticjobs"></section>
+
+You have all of the following search criteria:
+
+	 category: The id of a job category to limit to. See aj.categories.getList
+     type: The id of a job type to limit to. See aj.types.getList
+     sort: Accepted values are: date-posted-desc (the default) and date-posted-asc
+     company: Free-text matching against company names. Suggested values are the ids from aj.jobs.getCompanies
+     location: Free-text matching against company location names. Suggested values are the ids from aj.jobs.getLocation
+     telecommuting: Set to 1 if you only want telecommuting jobs
+     keywords: Keywords to look for in the title or description of the job posting. Separate multiple keywords with commas.
+     page: The page of listings to return. Defaults to 1.
+	 perpage: The number of listings per page. The default value is 10. The maximum value is 100.
+
+Further info can be had at http://www.authenticjobs.com/api/documentation/.  
+
+YOU WILL NEED TO OBTAIN AN AUTHENTICATION KEY AT:
+
+http://www.authenticjobs.com/api/
+
+Happy Hunting!

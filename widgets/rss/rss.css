@@ -1,0 +1,12 @@
+
+
+.feed_list  {
+	height: 142px;
+	overflow: auto !important;
+	list-style: none;
+	list-style-image: none;
+	padding: 0;
+	margin: 0;
+}
+
+
