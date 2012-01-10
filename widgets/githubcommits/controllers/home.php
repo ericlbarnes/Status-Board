@@ -29,6 +29,21 @@ class Githubcommits_Home_Controller extends Controller {
 		$user = Input::get('user', 'laravel');
 		$project = Input::get('project', 'laravel');
 		$branch = Input::get('branch', 'master');
+		$config_key = Input::get('config');
+		
+		if (!empty($config_key))
+		{
+			$settings = Config::get('widgets.'.$config_key);
+			if (!empty($settings)) {
+				$user    = $settings['user'];
+				$project = $settings['project'];
+				$branch   = $settings['branch'];
+			}
+			else {
+				echo "No available settings";
+			}
+		}
+
 		$commits = $this->github->getCommitApi()->getBranchCommits($user, $project, $branch);
 		
 		$view = View::make($view_file)

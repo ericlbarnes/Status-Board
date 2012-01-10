@@ -18,24 +18,23 @@
 </head>
 <body>
 	<div id="wrapper" class="clearfix">
-		<section class="small" data-zip="28056" data-widget="weather"></section>
-		<section class="small" data-user="laravel" data-project="laravel" data-label="open" data-widget="githubissues"></section>
-		<section class="small" data-search="laravel" data-widget="twitter"></section>
-
-		<section class="small" data-user="laravel" data-project="laravel" data-branch="skunkworks" data-widget="githubcommits"></section>
-		<section class="small" data-search="helpspot" data-widget="twitter"></section>
-		<section class="small" data-exchange="NASDAQ" data-symbol="GOOG" data-widget="stocks"></section>
-
-		<!--<section class="medium" data-widget="analytics"></section>-->
-		<section class="small" data-search="ericlbarnes" data-widget="twitter"></section>
-
+	<?php
+		// get the Widget Details
+		$widgets = Config::get('widgets');
+	?>
+	<?php if (count($widgets)): ?>
+		<?php foreach ($widgets as $config_key => $settings): ?>
+		<section class="<?php echo $settings['class'];?>" <?php if (isset($settings['interval'])):?>data-interval="<?php echo $settings['interval'];?>" <?php endif;?>data-config="<?php echo $config_key;?>" data-widget="<?php echo $settings['widget'];?>"></section>
+		<?php endforeach;?>
+	<?php endif;?>
+		
 	</div>
 	<script>
 		var SITE_URL = "<?php echo URL::to(); ?>";
 		var BASE_URL = "<?php echo URL::base(); ?>";
 	</script>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-	<script>window.jQuery || document.write('<script src="js/libs/jquery-1.6.2.min.js"><\/script>')</script>
+	<script>window.jQuery || document.write('<script src="/js/libs/jquery-1.6.2.min.js"><\/script>')</script>
 	<script src="<?php echo URL::to_asset('js/core.js'); ?>"></script>
 </body>
 </html>
