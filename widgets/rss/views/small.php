@@ -2,7 +2,7 @@
 	<?php echo $css; ?>
 </style>
 <header>
-	<h1><?= $site?></h1>
+	<h1><?php echo $site?></h1>
 </header>
 <div class="content github">
 
@@ -12,11 +12,11 @@
      	<?php foreach ($rss_feed as $feed):?>
 
      		<li class="clearfix">
-          		<a href="<?= $feed['link']?>" title="<?= $feed['title']?>"><?= $feed['title']?></a>
+          		<a href="<?php echo $feed['link']?>" title="<?php echo $feed['title']?>"><?php echo $feed['title']?></a>
      		</li>
      	<?php endforeach;?>
 		</ul>
      <?php  else:?>
-     	<div><h3><?= $rss_feed?></h3></div>
+     	<div><h3><?php echo $rss_feed?></h3></div>
      <?php endif;?>
 </div>
