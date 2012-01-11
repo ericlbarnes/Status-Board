@@ -53,5 +53,13 @@ return array(
 		'class'    => 'small',
 		'exchange' => 'NASDAQ',
 		'symbol'   => 'GOOG',
-	)
+	),	
+	'rss' => array(
+		'widget'   => 'rss',
+		'url'   	=> 'http://feeds.theonion.com/theonion/daily',
+		'class'    	=> 'small',
+		'site'   	=> 'The Onion',
+		'feedcount' => 5,
+	),
+	
 );
