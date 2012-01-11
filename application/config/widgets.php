@@ -32,6 +32,20 @@ return array(
 		'project'  => 'laravel',
 		'branch'   => 'skunkworks'
 	),
+	'githubissues_statusb' => array(
+		'widget'   => 'githubissues',
+		'class'    => 'small',
+		'user'     => 'ericbarnes',
+		'project'  => 'Status-Board',
+		'label'    => 'open'
+	),
+	'githubcommits_statusb' => array(
+		'widget'   => 'githubcommits',
+		'class'    => 'small',
+		'user'     => 'ericbarnes',
+		'project'  => 'Status-Board',
+		'branch'   => 'develop'
+	),
 	'twitter_laravel' => array(
 		'widget'   => 'twitter',
 		'class'    => 'small',
