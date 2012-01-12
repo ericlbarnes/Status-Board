@@ -37,6 +37,7 @@ Router::register('GET /', function()
 {
 	return View::make('home.index');
 });
+
 Router::register('GET /number2', function()
 {
 	return View::make('home.index');
