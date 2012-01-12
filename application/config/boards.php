@@ -1,6 +1,7 @@
 <?php
 
 return array(
+
 	/*
 	|--------------------------------------------------------------------------
 	| Status Board settings
@@ -9,6 +10,7 @@ return array(
 	| The possible boards available.
 	|
 	*/
+
 	'/' => array(
 		'name'    => 'Top Dashboard',
 		'theme'   => 'wood',
