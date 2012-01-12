@@ -2,34 +2,43 @@
 
 ## Ideas
 
-Here are the ideas for the status board script.
+Here are the ideas behind the status board script:
 
-1. Self Hosted and open source
-2. Simple and Elegant code
-3. Modular and easy to add new status widgets.
+1. Self hosted and open source
+2. Simple and elegant code
+3. Modular and easy to add new status widgets
+
+## Current Widgets
+
+* Authentic Jobs
+* Google Analytics
+* GitHub commit log
+* GitHub issues
+* Pingdom
+* RSS
+* Stocks
+* Twitter
+* Weather
 
 ## Widget Ideas
 
-* [] Basecamp
-* [] Analytics (Google?)
-* [x] Twitter
-* [] RSS / News Feeds
-* [] Bus / Train / Traffic status
-* [] Radio - Spotify, Grooveshark, etc. Would play based off api.
-* [x] Github Commit Logs
-* [x] Github issues
-* [] BitBucket API
-* [] Pancake Payments
+* Basecamp
+* News Feeds
+* Bus / Train / Traffic status
+* Radio - Spotify, Grooveshark, etc. Would play based off api.
+* BitBucket API
+* Pancake Payments
+* Anything that you always want to look at during the day
 
-Basically anything that you always want to look at during the day.
+## Requirements
 
-## Installation
+Since the application is built on Laravel, a PHP framework, the requirements are PHP 5.3+ and a compatible web server.
 
-Currently installation is pretty easy. Upload the files and visit yoursite.com/index.php and all the active widgets should load in. To manage the widgets you can edit the application/views/home/index.php and change the values.
+## Installation and Usage
 
-I decided to use html data attributes for the first release just to keep it simple. Future versions will probably include some form of storage and better ways of inserting the widget settings.
+Installation is very easy. Upload the files to your server and visit http://example.com/index.php. All of the default widgets should load. To manage widgets, edit `application/config/widgets.php`. The application also supports the creation of multiple boards. These are configured in `application/config/boards.php` and you'll need to register another route in `application/routes.php`.
 
-Remember this is alpha code so use at your own risk.
+Remember, this is alpha code so use at your own risk.
 
 ## Help Out
 
