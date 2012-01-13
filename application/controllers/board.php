@@ -17,7 +17,7 @@ class Board_Controller extends Controller {
 		// Bind default values to view
 		$view->data['page_title'] = $this->default_title;
 		$view->data['theme'] = $this->default_theme;
-		$view->data['board_widgets'] = array();
+		$view->data['widgets'] = array();
 
 		// Bind custom values to view
 		if (is_array($board_data)) {
@@ -38,7 +38,7 @@ class Board_Controller extends Controller {
 				foreach ($board_data['widgets'] as $widget) {
 
 					if (isset($widgets[$widget]) && !empty($widgets[$widget])) {
-						$view->data['board_widgets'][$widget] = $widgets[$widget];
+						$view->data['widgets'][$widget] = $widgets[$widget];
 					}
 
 				}
@@ -46,8 +46,6 @@ class Board_Controller extends Controller {
 			}
 
 		}
-		
-		//print_r($view);
 
 		return $view;
 	}

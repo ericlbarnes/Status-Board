@@ -18,10 +18,10 @@
 </head>
 <body>
 	<div id="wrapper" class="clearfix">
-<?php if (count($board_widgets)): ?>
-	<?php foreach ($board_widgets as $widget_key => $widget): ?>
+<?php if (count($widgets)): ?>
+	<?php foreach ($widgets as $key => $widget): ?>
 		<?php if(is_array($widget) && isset($widget['class']) && isset($widget['widget'])): ?>
-		<section class="<?php echo $widget['class'];?>" <?php if (isset($widget['interval'])):?>data-interval="<?php echo $widget['interval'];?>" <?php endif;?>data-config="<?php echo $widget_key;?>" data-widget="<?php echo $widget['widget'];?>"></section>
+		<section class="<?php echo $widget['class'];?>" <?php if (isset($widget['interval'])):?>data-interval="<?php echo $widget['interval'];?>" <?php endif;?>data-config="<?php echo $key;?>" data-widget="<?php echo $widget['widget'];?>"></section>
 		<?php endif;?>
 	<?php endforeach;?>
 <?php else:?>
