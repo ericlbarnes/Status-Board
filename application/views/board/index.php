@@ -17,7 +17,7 @@
 	<link rel="stylesheet" media="screen" href="<?php echo URL::to_asset('themes/'.$theme.'/style.css'); ?>">
 </head>
 <body>
-	<div id="wrapper" class="clearfix">
+	<div id="wrapper" class="clearfix sortable">
 <?php if (count($widgets)): ?>
 	<?php foreach ($widgets as $key => $widget): ?>
 		<?php if(is_array($widget) && isset($widget['class']) && isset($widget['widget'])): ?>
@@ -34,6 +34,7 @@
 	</script>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 	<script>window.jQuery || document.write('<script src="/js/libs/jquery-1.6.2.min.js"><\/script>')</script>
+	<script src="<?php echo URL::to_asset('js/libs/jquery-ui-1.8.13.min.js'); ?>"></script>
 	<script src="<?php echo URL::to_asset('js/core.js'); ?>"></script>
 </body>
 </html>

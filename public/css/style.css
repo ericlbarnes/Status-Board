@@ -78,3 +78,5 @@ a:hover {
 .clearfix:before, .clearfix:after { content: ""; display: table; }
 .clearfix:after { clear: both; }
 .clearfix { zoom: 1; }
+
+.ui-state-highlight { width: 300px; height: 200px; line-height: 1.2em; }

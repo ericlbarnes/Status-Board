@@ -3,7 +3,18 @@ $(document).ready(function() {
 	$('section').each(function(index) {
 		init_widget(this);
 	});
-
+	
+	$("div.sortable").sortable({
+		update: save_widget_positions,
+		placeholder: "ui-state-highlight",
+		opacity: 0.35,
+		distance: 30,
+		forcePlaceholderSize: true,
+		items: 'section',
+		revert: true
+	});
+	$( "div.sortable" ).disableSelection();
+	
 	function init_widget(widget) {
 		var name = $(widget).attr("data-widget");
 		var data = $(widget).data();
@@ -44,5 +55,26 @@ $(document).ready(function() {
 			}
 		});
 		return false;
+	}
+
+	function save_widget_positions() {
+		// get the widget config values
+		var a = [];
+		$('section').each(function(item){
+			a.push($(this).attr('data-config'));
+		});
+		
+		var names = a.join(",");
+		
+		$.ajax({
+			data: {names: names},
+			dataType: "html",
+			type: "POST",
+			url: SITE_URL+"save"+"?"+new Date().getTime(),
+			success: function(data) {
+				// place nice user message here
+			}
+		});
+		//return false;
 	}
 });
