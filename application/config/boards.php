@@ -11,7 +11,7 @@ return array(
 	|
 	*/
 
-	'/' => array(
+	'default' => array(
 		'name'    => 'Top Dashboard',
 		'theme'   => 'wood',
 		'widgets' => array(
