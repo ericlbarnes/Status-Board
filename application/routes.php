@@ -33,15 +33,18 @@
 |
 */
 
-Router::register('GET /', function()
-{
-	return View::make('home.index');
-});
+/*
+ * Dynamically set up boards based on config file
+ */
+$boards = Config::get('boards');
+foreach ($boards as $key => $value) {
 
-Router::register('GET /number2', function()
-{
-	return View::make('home.index');
-});
+	if ($key === 'default') {
+		$key = '';
+	}
+
+	Router::register('GET /'.$key, 'board@index');
+}
 
 /*
 |--------------------------------------------------------------------------

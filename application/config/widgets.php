@@ -7,9 +7,8 @@ return array(
 	| Widget settings
 	|--------------------------------------------------------------------------
 	|
-	| List the widgets in order they will appear.
-	|
-	| The widget settings must have a unique key as this is used to retrieve the settings in the controller.
+	| Each widget must have a unique key. This is used to retrieve the settings
+	| from the controller.
 	|
 	*/
 

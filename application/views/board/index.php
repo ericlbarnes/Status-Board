@@ -1,24 +1,3 @@
-<?php
-	// the the page
-	$uri = Request::uri();
-
-	// page elements
-	$page_title = 'Status Board';
-	$theme = 'wood';
-	$board_widgets = array();
-
-	// get the Widget Details
-	$board_data = Config::get('boards.'.$uri);
-	if (is_array($board_data)) {
-		
-		// page elements
-		$page_title = isset($board_data['name']) ? $board_data['name'] : 'Status Board';
-		$theme = isset($board_data['theme']) ? $board_data['theme'] : 'wood';
-		$board_widgets = is_array($board_data['widgets']) ? $board_data['widgets'] : array();
-	}
-	$widget_data = Config::get('widgets');
-
-?>
 <!doctype html>
 
 <!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
@@ -36,20 +15,18 @@
 	<meta http-equiv="x-dns-prefetch-control" content="off"/>
 	<link rel="stylesheet" media="screen" href="<?php echo URL::to_asset('css/style.css'); ?>">
 	<link rel="stylesheet" media="screen" href="<?php echo URL::to_asset('themes/'.$theme.'/style.css'); ?>">
- </head>
+</head>
 <body>
 	<div id="wrapper" class="clearfix">
-<?php if (count($board_widgets)): ?>
-	<?php foreach ($board_widgets as $widget_key): ?>
-		<?php $settings = $widget_data[$widget_key]; ?>
-		<?php if(is_array($settings) && isset($settings['class']) && isset($settings['widget'])): ?>
-		<section class="<?php echo $settings['class'];?>" <?php if (isset($settings['interval'])):?>data-interval="<?php echo $settings['interval'];?>" <?php endif;?>data-config="<?php echo $widget_key;?>" data-widget="<?php echo $settings['widget'];?>"></section>
+<?php if (count($widgets)): ?>
+	<?php foreach ($widgets as $key => $widget): ?>
+		<?php if(is_array($widget) && isset($widget['class']) && isset($widget['widget'])): ?>
+		<section class="<?php echo $widget['class'];?>" <?php if (isset($widget['interval'])):?>data-interval="<?php echo $widget['interval'];?>" <?php endif;?>data-config="<?php echo $key;?>" data-widget="<?php echo $widget['widget'];?>"></section>
 		<?php endif;?>
 	<?php endforeach;?>
 <?php else:?>
 		<div class="error">Error: There are no board settings setup</div>
 <?php endif;?>
-		
 	</div>
 	<script>
 		var SITE_URL = "<?php echo URL::to(); ?>";
