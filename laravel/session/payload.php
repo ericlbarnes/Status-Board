@@ -60,7 +60,7 @@ class Payload {
 		// If the session doesn't exist or is invalid, we will create a new session
 		// array and mark the session as being non-existent. Some drivers, such as
 		// the database driver, need to know whether the session exists in storage
-		// so they can know whether to "insert" or "update" the session.
+		// so they can know whether to insert or update the session.
 		if (is_null($this->session) or static::expired($this->session))
 		{
 			$this->exists = false;
@@ -318,10 +318,6 @@ class Payload {
 	 */
 	protected function age()
 	{
-		// To age the flash data, we want "expire" the flashed items from
-		// the previous request, and move the items flashed during this
-		// request to the array of "old" flash data so they will be
-		// expired after the user's next request.
 		$this->session['data'][':old:'] = $this->session['data'][':new:'];
 
 		$this->session['data'][':new:'] = array();

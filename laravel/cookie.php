@@ -42,7 +42,7 @@ class Cookie {
 		if ( ! is_null($value) and isset($value[40]) and $value[40] == '~')
 		{
 			// The hash signature and the cookie value are separated by a tilde
-			// character for convenience. To separate the hash and the contents,
+			// character for convenience. To separate the hash and the contents
 			// we can simply expode on that character.
 			//
 			// By re-feeding the cookie value into the "sign" method, we should
@@ -62,7 +62,7 @@ class Cookie {
 	/**
 	 * Set the value of a cookie.
 	 *
-	 * If the HTTP response headers have already been sent, the cookie will not be set.
+	 * If the response headers have already been sent, the cookie will not be set.
 	 *
 	 * <code>
 	 *		// Set the value of the "favorite" cookie
@@ -137,11 +137,14 @@ class Cookie {
 	 * Delete a cookie.
 	 *
 	 * @param  string  $name
+	 * @param  string  $path
+	 * @param  string  $domain
+	 * @param  bool    $secure
 	 * @return bool
 	 */
-	public static function forget($name)
+	public static function forget($name, $path = '/', $domain = null, $secure = false)
 	{
-		return static::put($name, null, -2000);
+		return static::put($name, null, -2000, $path, $domain, $secure);
 	}
 
 }

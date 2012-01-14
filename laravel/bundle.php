@@ -54,7 +54,7 @@ class Bundle {
 		// start script for reverse routing efficiency purposes.
 		static::routes($bundle);
 
-		static::$started[] = $bundle;
+		static::$started[] = strtolower($bundle);
 	}
 
 	/**
@@ -71,7 +71,6 @@ class Bundle {
 		{
 			require $path;
 		}
-
 	}
 
 	/**
@@ -114,15 +113,23 @@ class Bundle {
 	/**
 	 * Get the identifier prefix for the bundle.
 	 *
-	 * If the bundle is something other than the default bundle, the prefix will be
-	 * returned, otherwise an empty string will be returned.
-	 *
 	 * @param  string  $bundle
 	 * @return string
 	 */
 	public static function prefix($bundle)
 	{
 		return ($bundle !== DEFAULT_BUNDLE) ? "{$bundle}::" : '';
+	}
+
+	/**
+	 * Get the class prefix for a given bundle.
+	 *
+	 * @param  string  $bundle
+	 * @return string
+	 */
+	public static function class_prefix($bundle)
+	{
+		return ($bundle !== DEFAULT_BUNDLE) ? Str::classify($bundle).'_' : '';
 	}
 
 	/**
@@ -201,11 +208,18 @@ class Bundle {
 	}
 
 	/**
-	 * Parse a element identifier and return the bundle name and element.
+	 * Return the bundle name if it exists, else return the default bundle.
 	 *
-	 * If the identifier does not contain a bundle name, null will be returned
-	 * in the array position containing the bundle. The array will contain the
-	 * bundle name in the first position and the element name in the second.
+	 * @param  string  $bundle
+	 * @return string
+	 */
+	public static function resolve($bundle)
+	{
+		return (static::exists($bundle)) ? $bundle : DEFAULT_BUNDLE;
+	}
+
+	/**
+	 * Parse a element identifier and return the bundle name and element.
 	 *
 	 * <code>
 	 *		// Returns array(null, 'admin.user')

@@ -174,16 +174,28 @@ function array_first($array, $callback, $default = null)
 }
 
 /**
- * Return the value of the given item.
+ * Spin through the array, executing a callback with each key and element.
  *
- * If the given item is a Closure the result of the Closure will be returned.
+ * @param  array  $array
+ * @param  mixed  $callback
+ * @return array
+ */
+function array_spin($array, $callback)
+{
+	return array_map($callback, array_keys($array), array_values($array));
+}
+
+/**
+ * Return the first element of an array.
  *
- * @param  mixed  $value
+ * This is simply a convenient wrapper around the "reset" method.
+ *
+ * @param  array  $array
  * @return mixed
  */
-function value($value)
+function head($array)
 {
-	return ($value instanceof Closure) ? call_user_func($value) : $value;
+	return reset($array);
 }
 
 /**
@@ -196,4 +208,29 @@ function value($value)
 function starts_with($haystack, $needle)
 {
 	return strpos($haystack, $needle) === 0;
+}
+
+/**
+ * Determine if a given string contains a given sub-string.
+ *
+ * @param  string  $haystack
+ * @param  string  $needle
+ * @return bool
+ */
+function str_contains($haystack, $needle)
+{
+	return strpos($haystack, $needle) !== false;
+}
+
+/**
+ * Return the value of the given item.
+ *
+ * If the given item is a Closure the result of the Closure will be returned.
+ *
+ * @param  mixed  $value
+ * @return mixed
+ */
+function value($value)
+{
+	return ($value instanceof Closure) ? call_user_func($value) : $value;
 }
