@@ -36,15 +36,8 @@
 /*
  * Dynamically set up boards based on config file
  */
-$boards = Config::get('boards');
-foreach ($boards as $key => $value) {
-
-	if ($key === 'default') {
-		$key = '';
-	}
-
-	Router::register('GET /'.$key, 'board@index');
-}
+Router::register('GET /', 'board@index');
+Router::register('GET /(:any)', 'board@index');
 
 /*
 |--------------------------------------------------------------------------

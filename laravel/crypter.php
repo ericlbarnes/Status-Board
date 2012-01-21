@@ -1,10 +1,5 @@
 <?php namespace Laravel; defined('APP_PATH') or die('No direct script access.');
 
-if ( ! function_exists('mcrypt_encrypt'))
-{
-	throw new \Exception('Mcrypt must be installed before using the Crypter class.');
-}
-
 if (trim(Config::get('application.key')) === '')
 {
 	throw new \Exception('The Crypter class may not be used without an application key.');
@@ -51,16 +46,22 @@ class Crypter {
 	 */
 	public static function decrypt($value)
 	{
-		if (($value = base64_decode($value)) === false)
-		{
-			throw new \Exception('Input value is not valid base64 data.');
-		}
+		$value = base64_decode($value);
 
+		// To decrypt the value, we first need to extract the input vector and
+		// the encrypted value. The input vector size varies across different
+		// encryption ciphers and modes, so we will get the correct size for
+		// the cipher and mode being used by the class.
 		$iv = substr($value, 0, static::iv_size());
 
 		$value = substr($value, static::iv_size());
 
-		return rtrim(mcrypt_decrypt(static::$cipher, static::key(), $value, static::$mode, $iv), "\0");
+		// Once we have the input vector and the value, we can give them both
+		// to Mcrypt for decryption. The value is sometimes padded with \0,
+		// so we will trim all of the padding characters from the string.
+		$key = static::key();
+
+		return rtrim(mcrypt_decrypt(static::$cipher, $key, $value, static::$mode, $iv), "\0");
 	}
 
 	/**

@@ -133,7 +133,7 @@ class Str {
 	 */
 	public static function singular($value)
 	{
-		return array_get(array_flip(Config::get('strings.inflection')), $value, $value);
+		return array_get(array_flip(Config::get('strings.inflection')), strtolower($value), $value);
 	}
 
 	/**
@@ -156,7 +156,7 @@ class Str {
 	{
 		if ((int) $count == 1) return $value;
 
-		return array_get(Config::get('strings.inflection'), $value, $value);
+		return array_get(Config::get('strings.inflection'), strtolower($value), $value);
 	}
 
 	/**
@@ -230,6 +230,27 @@ class Str {
 		$value = preg_replace(array_keys($foreign), array_values($foreign), $value);
 
 		return preg_replace('/[^\x09\x0A\x0D\x20-\x7E]/', '', $value);
+	}
+
+	/**
+	 * Convert a string to an underscored, camel-cased class name.
+	 *
+	 * This method is primarily used to format task and controller names.
+	 *
+	 * <code>
+	 *		// Returns "Task_Name"
+	 *		$class = Str::classify('task_name');
+	 *
+	 *		// Returns "Taylor_Otwell"
+	 *		$class = Str::classify('taylor otwell')
+	 * </code>
+	 *
+	 * @param  string  $value
+	 * @return string
+	 */
+	public static function classify($value)
+	{
+		return str_replace(' ', '_', static::title(str_replace(array('_', '.'), ' ', $value)));
 	}
 
 	/**

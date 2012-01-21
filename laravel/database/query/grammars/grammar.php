@@ -1,16 +1,9 @@
-<?php namespace Laravel\Database\Grammars;
+<?php namespace Laravel\Database\Query\Grammars;
 
 use Laravel\Database\Query;
 use Laravel\Database\Expression;
 
-class Grammar {
-
-	/**
-	 * The keyword identifier for the database system.
-	 *
-	 * @var string
-	 */
-	protected $wrapper = '"';
+class Grammar extends \Laravel\Database\Grammar {
 
 	/**
 	 * All of the query componenets in the order they should be built.
@@ -18,8 +11,8 @@ class Grammar {
 	 * @var array
 	 */
 	protected $components = array(
-		'aggregate', 'selects', 'from', 'joins',
-		'wheres', 'orderings', 'limit', 'offset',
+		'aggregate', 'selects', 'from', 'joins', 'wheres',
+		'groupings', 'orderings', 'limit', 'offset',
 	);
 
 	/**
@@ -28,10 +21,19 @@ class Grammar {
 	 * @param  Query   $query
 	 * @return string
 	 */
-	final public function select(Query $query)
+	public function select(Query $query)
 	{
-		$sql = array();
+		return $this->concatenate($this->components($query));
+	}
 
+	/**
+	 * Generate the SQL for every component of the query.
+	 *
+	 * @param  Query  $query
+	 * @return array
+	 */
+	final protected function components($query)
+	{
 		// Each portion of the statement is compiled by a function corresponding
 		// to an item in the components array. This lets us to keep the creation
 		// of the query very granular, and allows for the flexible customization
@@ -44,14 +46,22 @@ class Grammar {
 		{
 			if ( ! is_null($query->$component))
 			{
-				$sql[] = call_user_func(array($this, $component), $query);
+				$sql[$component] = call_user_func(array($this, $component), $query);
 			}
 		}
 
-		// Once all of the clauses have been compiled, we can join them all as
-		// one statement. Any segments that are null or an empty string will
-		// be removed from the array of clauses before they are imploded.
-		return implode(' ', array_filter($sql, function($value)
+		return (array) $sql;
+	}
+
+	/**
+	 * Concatenate an array of SQL segments, removing those that are empty.
+	 *
+	 * @param  array   $components
+	 * @return string
+	 */
+	final protected function concatenate($components)
+	{
+		return implode(' ', array_filter($components, function($value)
 		{
 			return (string) $value !== '';
 		}));
@@ -143,7 +153,28 @@ class Grammar {
 			$sql[] = $where['connector'].' '.$this->{$where['type']}($where);
 		}
 
-		if (isset($sql)) return implode(' ', array_merge(array('WHERE 1 = 1'), $sql));
+		if  (isset($sql))
+		{
+			// We attach the boolean connector to every where segment just
+			// for convenience. Once we have built the entire clause we'll
+			// remove the first instance of a connector from the clause.
+			return 'WHERE '.preg_replace('/AND |OR /', '', implode(' ', $sql), 1);
+		}
+	}
+
+	/**
+	 * Compile a nested WHERE clause.
+	 *
+	 * @param  array   $where
+	 * @return string
+	 */
+	protected function where_nested($where)
+	{
+		// To generate a nested WHERE clause, we'll just feed the query
+		// back into the "wheres" method. Once we have the clause, we
+		// will strip off the first six characters to get rid of the
+		// leading WHERE keyword.
+		return '('.substr($this->wheres($where['query']), 6).')';
 	}
 
 	/**
@@ -210,12 +241,23 @@ class Grammar {
 	/**
 	 * Compile a raw WHERE clause.
 	 *
-	 * @param  string  $where
+	 * @param  array   $where
 	 * @return string
 	 */
 	final protected function where_raw($where)
 	{
-		return $where;
+		return $where['sql'];
+	}
+
+	/**
+	 * Compile the GROUP BY clause for a query.
+	 *
+	 * @param  Query   $query
+	 * @return string
+	 */
+	protected function groupings(Query $query)
+	{
+		return 'GROUP BY '.$this->columnize($query->groupings);
 	}
 
 	/**
@@ -226,14 +268,6 @@ class Grammar {
 	 */
 	protected function orderings(Query $query)
 	{
-		// To generate the list of query orderings, we will first make an array
-		// of the columns and directions on which the query should be ordered.
-		// Once we have an array, we can comma-delimit it and append it to
-		// the "ORDER BY" clause to get the valid SQL for the query.
-		//
-		// All of the columns will be wrapped in keyword identifiers to avoid
-		// any naming collisions with the database system. The direction of
-		// the order is upper-cased strictly for syntax consistency.
 		foreach ($query->orderings as $ordering)
 		{
 			$direction = strtoupper($ordering['direction']);
@@ -343,102 +377,6 @@ class Grammar {
 		// make the WHERE clauses for the query. The "wheres" method 
 		// encapsulates the logic to create the full WHERE clause.
 		return trim("DELETE FROM {$table} ".$this->wheres($query));
-	}
-
-	/**
-	 * Wrap a value in keyword identifiers.
-	 *
-	 * @param  string  $value
-	 * @return string
-	 */
-	public function wrap($value)
-	{
-		// If the value being wrapped contains a column alias, we need to
-		// wrap it a little differently as each segment must be wrapped
-		// and not the entire string. We'll split the value on the "as"
-		// joiner to extract the column and the alias.
-		if (strpos(strtolower($value), ' as ') !== false)
-		{
-			$segments = explode(' ', $value);
-
-			return $this->wrap($segments[0]).' AS '.$this->wrap($segments[2]);
-		}
-
-		// Expressions should be injected into the query as raw strings,
-		// so we do not want to wrap them in any way. We'll just return
-		// the string value from the expression to be included.
-		if ($value instanceof Expression) return $value->get();
-
-		// Since columns may be prefixed with their corresponding table
-		// name so as to not make them ambiguous, we will need to wrap
-		// the table and the column in keyword identifiers.
-		foreach (explode('.', $value) as $segment)
-		{
-			if ($segment == '*')
-			{
-				$wrapped[] = $segment;
-			}
-			else
-			{
-				$wrapped[] = $this->wrapper.$segment.$this->wrapper;
-			}
-		}
-
-		return implode('.', $wrapped);
-	}
-
-	/**
-	 * Create query parameters from an array of values.
-	 *
-	 * <code>
-	 *		Returns "?, ?, ?", which may be used as PDO place-holders
-	 *		$parameters = $grammar->parameterize(array(1, 2, 3));
-	 *
-	 *		// Returns "?, "Taylor"" since an expression is used
-	 *		$parameters = $grammar->parameterize(array(1, DB::raw('Taylor')));
-	 * </code>
-	 *
-	 * @param  array   $values
-	 * @return string
-	 */
-	final public function parameterize($values)
-	{
-		return implode(', ', array_map(array($this, 'parameter'), $values));
-	}
-
-	/**
-	 * Get the appropriate query parameter string for a value.
-	 *
-	 * <code>
-	 *		// Returns a "?" PDO place-holder
-	 *		$value = $grammar->parameter('Taylor Otwell');
-	 *
-	 *		// Returns "Taylor Otwell" as the raw value of the expression
-	 *		$value = $grammar->parameter(DB::raw('Taylor Otwell'));
-	 * </code>
-	 *
-	 * @param  mixed   $value
-	 * @return string
-	 */
-	final public function parameter($value)
-	{
-		return ($value instanceof Expression) ? $value->get() : '?';
-	}
-
-	/**
-	 * Create a comma-delimited list of wrapped column names.
-	 *
-	 * <code>
-	 *		// Returns ""Taylor", "Otwell"" when the identifier is quotes
-	 *		$columns = $grammar->columnize(array('Taylor', 'Otwell'));
-	 * </code>
-	 *
-	 * @param  array   $columns
-	 * @return string
-	 */
-	final public function columnize($columns)
-	{
-		return implode(', ', array_map(array($this, 'wrap'), $columns));
 	}
 
 }

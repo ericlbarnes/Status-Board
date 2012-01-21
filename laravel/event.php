@@ -37,18 +37,11 @@ class Event {
 	 */
 	public static function listen($event, $callback)
 	{
-		if ( ! is_callable($callback))
-		{
-			throw new \Exception("A callback for event [$event] is not callable.");
-		}
-
 		static::$events[$event][] = $callback;
 	}
 
 	/**
 	 * Fire an event so that all listeners are called.
-	 *
-	 * The responses from the events will be returned in an array.
 	 *
 	 * <code>
 	 *		// Fire the "start" event

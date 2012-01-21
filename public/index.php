@@ -3,7 +3,7 @@
  * Laravel - A PHP Framework For Web Artisans
  *
  * @package  Laravel
- * @version  2.0.6
+ * @version  2.0.7
  * @author   Taylor Otwell <taylorotwell@gmail.com>
  * @link     http://laravel.com
  */
@@ -16,31 +16,29 @@ define('LARAVEL_START', microtime(true));
 // --------------------------------------------------------------
 // The path to the application directory.
 // --------------------------------------------------------------
-$application = '../application';
+define('APP_PATH', realpath('../application').'/');
 
 // --------------------------------------------------------------
 // The path to the bundles directory.
 // --------------------------------------------------------------
-$bundles = '../widgets';
+define('BUNDLE_PATH', realpath('../widgets').'/');
 
 // --------------------------------------------------------------
 // The path to the storage directory.
 // --------------------------------------------------------------
-$storage = '../storage';
+define('STORAGE_PATH', realpath('../storage').'/');
 
 // --------------------------------------------------------------
 // The path to the Laravel directory.
 // --------------------------------------------------------------
-$laravel = '../laravel';
+define('SYS_PATH', realpath('../laravel').'/');
 
 // --------------------------------------------------------------
 // The path to the public directory.
 // --------------------------------------------------------------
-$public = __DIR__;
+define('PUBLIC_PATH', realpath(__DIR__).'/');
 
 // --------------------------------------------------------------
 // Launch Laravel.
 // --------------------------------------------------------------
-require $laravel.'/laravel.php';
-
-// echo number_format((microtime(true) - LARAVEL_START) * 1000, 2);
+require SYS_PATH.'/laravel.php';
