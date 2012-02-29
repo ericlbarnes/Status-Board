@@ -29,19 +29,29 @@ class Twitter_Home_Controller extends Controller {
 		{
 			$settings = Config::get('widgets.'.$config_key);
 			if (!empty($settings)) {
-				$search = $settings['search'];
+				
+				if(isset($settings['woeid'])) {
+					$view_file = 'twitter::trends_'.Input::get('size', 'small');
+				}
+
+				$twitter_search = new Twittersearch($settings['search']);
+
+				$view = View::make($view_file);
+				if (isset($settings['search'])) {
+					$view->with('search', $settings['search'])
+						->with('messages', $twitter_search->results());
+				}
+				elseif (isset($settings['woeid'])) {
+					$view->with('messages', $twitter_search->trends($settings['woeid']));
+				}
+
+				$view->with('css', File::get(BUNDLE_PATH.'twitter/twitter.css'));
+				exit($view);
 			}
 			else {
 				echo "No available settings";
 			}
 		}
 		
-		$twitter_search = new Twittersearch($search);
-		
-		$view = View::make($view_file)
-			->with('search', $search)
-			->with('messages', $twitter_search->results())
-			->with('css', File::get(BUNDLE_PATH.'twitter/twitter.css'));
-		exit($view);
 	}
 }
