@@ -3,7 +3,7 @@
 </style>
 <div class="analytics">
 <header>
-	<h1>Visitor Analytics</h1>
+	<h1><?php echo isset($data['widget_settings']['domain']) ? $data['widget_settings']['domain']." " : ''?><?php echo isset($data['report_settings']['name']) ? $data['report_settings']['name'] : ''?></h1>
 </header>
 <div class="content">
 	<?php if (isset($error)): ?>

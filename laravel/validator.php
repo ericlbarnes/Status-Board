@@ -415,11 +415,16 @@ class Validator {
 	 */
 	protected function validate_unique($attribute, $value, $parameters)
 	{
-		if ( ! isset($parameters[1])) $parameters[1] = $attribute;
-
 		if (is_null($this->db)) $this->db = Database::connection();
 
-		return $this->db->table($parameters[0])->where($parameters[1], '=', $value)->count() == 0;
+		$query = $this->db->table($parameters[0])->where($attribute, '=', $value);
+
+		if (isset($parameters[1]))
+		{
+			$query->where('id', '<>', $parameters[1]);
+		}
+
+		return $query->count() == 0;
 	}
 
 	/**
@@ -571,7 +576,9 @@ class Validator {
 		// message from the validation language file.
 		else
 		{
-			return Lang::line("{$bundle}validation.{$rule}")->get($this->language);
+			$line = "{$bundle}validation.{$rule}";
+
+			return Lang::line($line)->get($this->language);
 		}
 	}
 
@@ -748,9 +755,9 @@ class Validator {
 	 */
 	public function __call($method, $parameters)
 	{
-		// First we will slice the "validate_" prefix off of the validator since custom
-		// validators aren't registered with such a prefix, then we can just call the
-		// method, passing the given parameters to it for validation.
+		// First we will slice the "validate_" prefix off of the validator since
+		// custom validators aren't registered with such a prefix, then we can
+		// just call the method with the given parameters.
 		if (isset(static::$validators[$method = substr($method, 9)]))
 		{
 			return call_user_func_array(static::$validators[$method], $parameters);

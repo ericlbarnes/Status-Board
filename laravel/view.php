@@ -31,6 +31,13 @@ class View implements ArrayAccess {
 	public static $shared = array();
 
 	/**
+	 * All of the registered view names.
+	 *
+	 * @var array
+	 */
+	public static $names = array();
+
+	/**
 	 * Create a new view instance.
 	 *
 	 * <code>
@@ -61,7 +68,7 @@ class View implements ArrayAccess {
 		// This makes error display in the view extremely convenient, since the
 		// developer can always assume they have a message container instance
 		// available to them in the view.
-		if (Config::get('session.driver') !== '' and Session::started())
+		if (Config::get('session.driver') !== '' and Session::started() and ! isset($this['errors']))
 		{
 			$this->data['errors'] = Session::get('errors', function()
 			{
@@ -121,6 +128,66 @@ class View implements ArrayAccess {
 	}
 
 	/**
+	 * Create a new view instance of a named view.
+	 *
+	 * <code>
+	 *		// Create a new named view instance
+	 *		$view = View::of('profile');
+	 *
+	 *		// Create a new named view instance with bound data
+	 *		$view = View::of('profile', array('name' => 'Taylor'));
+	 * </code>
+	 *
+	 * @param  string  $name
+	 * @param  array   $data
+	 * @return View
+	 */
+	public static function of($name, $data = array())
+	{
+		return new static(static::$names[$name], $data);
+	}
+
+	/**
+	 * Assign a name to a view.
+	 *
+	 * <code>
+	 *		// Assign a name to a view
+	 *		View::name('partials.profile', 'profile');
+	 *
+	 *		// Resolve an instance of a named view
+	 *		$view = View::of('profile');
+	 * </code>
+	 *
+	 * @param  string  $view
+	 * @param  string  $name
+	 * @return void
+	 */
+	public static function name($view, $name)
+	{
+		static::$names[$name] = $view;
+	}
+
+	/**
+	 * Register a view composer with the Event class.
+	 *
+	 * <code>
+	 *		// Register a composer for the "home.index" view
+	 *		View::composer('home.index', function($view)
+	 *		{
+	 *			$view['title'] = 'Home';
+	 *		});
+	 * </code>
+	 *
+	 * @param  string   $view
+	 * @param  Closure  
+	 * @return void
+	 */
+	public static function composer($view, $composer)
+	{
+		Event::listen("composing: {$view}", $composer);
+	}
+
+	/**
 	 * Get the evaluated string content of the view.
 	 *
 	 * @return string
@@ -130,17 +197,17 @@ class View implements ArrayAccess {
 		// To allow bundles or other pieces of the application to modify the
 		// view before it is rendered, we will fire an event, passing in the
 		// view instance so it can modified by any of the listeners.
-		Event::fire("composing:{$this->view}", array($this));
+		Event::fire("composing: {$this->view}", array($this));
 
 		$data = $this->data();
 
 		ob_start() and extract($data, EXTR_SKIP);
 
-		// If the view is Bladed, we need to check the view for modifications
-		// and get the path to the compiled view file. Otherwise, we'll just
+		// If the view is Bladed, we need to check the view for changes and
+		// get the path to the compiled view file. Otherwise, we'll just
 		// use the regular path to the view.
 		//
-		// Also, if the Blade view has expired or doesn't exist, it will be
+		// Also, if the Blade view has expired or doesn't exist it will be
 		// re-compiled and placed in the view storage directory. The Blade
 		// views are re-compiled each time the original view is changed.
 		if (strpos($this->path, BLADE_EXT) !== false)
@@ -165,9 +232,9 @@ class View implements ArrayAccess {
 		$data = array_merge($this->data, static::$shared);
 
 		// All nested views and responses are evaluated before the main view.
-		// This allows the assets used by the nested views to be added to the
-		// asset container before the main view is evaluated and dumps the
-		// links to the assets.
+		// This allows the assets used by nested views to be added to the
+		// asset container before the main view is evaluated and dumps
+		// the links to the assets into the HTML.
 		foreach ($data as &$value) 
 		{
 			if ($value instanceof View or $value instanceof Response)

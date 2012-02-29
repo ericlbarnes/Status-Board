@@ -1,4 +1,4 @@
-<?php namespace Laravel; defined('APP_PATH') or die('No direct script access.'); 
+<?php namespace Laravel; defined('APP_PATH') or die('No direct script access.');
 
 class Asset {
 
@@ -83,8 +83,8 @@ class Asset_Container {
 	 * Add an asset to the container.
 	 *
 	 * The extension of the asset source will be used to determine the type of
-	 * asset being registered (CSS or JavaScript). If you are using a non-standard
-	 * extension, you may use the style or script methods to register assets.
+	 * asset being registered (CSS or JavaScript). When using a non-standard
+	 * extension, the style/script methods may be used to register assets.
 	 *
 	 * <code>
 	 *		// Add an asset to the container
@@ -257,7 +257,7 @@ class Asset_Container {
 	{
 		// If the asset has no more dependencies, we can add it to the sorted list
 		// and remove it from the array of assets. Otherwise, we will not verify
-		// the asset's dependencies and determine if they have already been sorted.
+		// the asset's dependencies and determine if they've been sorted.
 		if (count($assets[$asset]['dependencies']) == 0)
 		{
 			$sorted[$asset] = $value;
@@ -312,6 +312,8 @@ class Asset_Container {
 		{
 			throw new \Exception("Assets [$asset] and [$dependency] have a circular dependency.");
 		}
+
+		return true;
 	}
 
 }

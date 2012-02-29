@@ -12,7 +12,7 @@ class Cache {
 	/**
 	 * Get a cache driver instance.
 	 *
-	 * If no driver name is specified, the default driver will be returned.
+	 * If no driver name is specified, the default will be returned.
 	 *
 	 * <code>
 	 *		// Get the default cache driver instance
@@ -58,6 +58,9 @@ class Cache {
 
 			case 'redis':
 				return new Cache\Drivers\Redis(Redis::db());
+
+			case 'database':
+				return new Cache\Drivers\Database(Config::get('cache.key'));
 
 			default:
 				throw new \Exception("Cache driver {$driver} is not supported.");

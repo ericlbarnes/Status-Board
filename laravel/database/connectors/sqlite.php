@@ -3,7 +3,7 @@
 class SQLite extends Connector {
 
 	/**
-	 * Establish a PDO database connection for a given database configuration.
+	 * Establish a PDO database connection.
 	 *
 	 * @param  array  $config
 	 * @return PDO

@@ -129,6 +129,7 @@ return array(
 	'aliases' => array(
 		'Arr'        => 'Laravel\\Arr',
 		'Asset'      => 'Laravel\\Asset',
+		'Auth'       => 'Laravel\\Auth',
 		'Autoloader' => 'Laravel\\Autoloader',
 		'Benchmark'  => 'Laravel\\Benchmark',
 		'Bundle'     => 'Laravel\\Bundle',
@@ -154,6 +155,7 @@ return array(
 		'Request'    => 'Laravel\\Request',
 		'Response'   => 'Laravel\\Response',
 		'Router'     => 'Laravel\\Routing\\Router',
+		'Schema'     => 'Laravel\\Database\\Schema',
 		'Section'    => 'Laravel\\Section',
 		'Session'    => 'Laravel\\Session',
 		'Str'        => 'Laravel\\Str',

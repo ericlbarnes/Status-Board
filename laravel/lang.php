@@ -142,7 +142,9 @@ class Lang {
 		// returned. If that is the case, we'll make the item "null".
 		if (count($segments) >= 2)
 		{
-			return array($bundle, $segments[0], implode('.', array_slice($segments, 1)));
+			$line = implode('.', array_slice($segments, 1));
+
+			return array($bundle, $segments[0], $line);
 		}
 		else
 		{
@@ -160,7 +162,10 @@ class Lang {
 	 */
 	public static function load($bundle, $language, $file)
 	{
-		if (isset(static::$lines[$bundle][$language][$file])) return;
+		if (isset(static::$lines[$bundle][$language][$file]))
+		{
+			return true;
+		}
 
 		$lines = array();
 

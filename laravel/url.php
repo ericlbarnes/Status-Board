@@ -5,10 +5,6 @@ class URL {
 	/**
 	 * Get the base URL of the application.
 	 *
-	 * If the application URL is explicitly defined in the application configuration
-	 * file, that URL will be returned. Otherwise, the URL will be guessed based on
-	 * the host and script name available in the global $_SERVER array.
-	 *
 	 * @return string
 	 */
 	public static function base()
@@ -19,10 +15,10 @@ class URL {
 		{
 			$protocol = (Request::secure()) ? 'https://' : 'http://';
 
-			// By removing the basename of the script, we should be left with the path where
-			// the framework is installed. For example, if the framework is installed within
-			// http://localhost/laravel/public, the path we'll get from this statement will
-			// be "/laravel/public", and we remove that to get the base URL.
+			// Basically, by removing the basename, we are removing everything after the
+			// and including the front controller from the request URI. Leaving us with
+			// the path in which the framework is installed. From that path, we can
+			// construct the base URL to the application.
 			$path = str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
 
 			return rtrim($protocol.$_SERVER['HTTP_HOST'].$path, '/');
@@ -75,6 +71,41 @@ class URL {
 	}
 
 	/**
+	 * Generate a URL to a controller action.
+	 *
+	 * <code>
+	 *		// Generate a URL to the "index" method of the "user" controller
+	 *		$url = URL::to_action('user@index');
+	 *
+	 *		// Generate a URL to http://example.com/user/profile/taylor
+	 *		$url = URL::to_action('user@profile', array('taylor'));
+	 * </code>
+	 *
+	 * @param  string  $action
+	 * @param  array   $parameters
+	 * @param  bool    $https
+	 * @return string
+	 */
+	public static function to_action($action, $parameters = array(), $https = false)
+	{
+		$action = str_replace(array('.', '@'), '/', $action);
+
+		return static::to($action.'/'.implode('/', $parameters), $https);
+	}
+
+	/**
+	 * Generate a HTTPS URL to a controller action.
+	 *
+	 * @param  string  $action
+	 * @param  array   $parameters
+	 * @return string
+	 */
+	public static function to_secure_action($action, $parameters = array())
+	{
+		return static::to_action($action, $parameters, true);
+	}
+
+	/**
 	 * Generate an application URL to an asset.
 	 *
 	 * @param  string  $url
@@ -101,10 +132,6 @@ class URL {
 	/**
 	 * Generate a URL from a route name.
 	 *
-	 * For routes that have wildcard parameters, an array may be passed as the
-	 * second parameter to the method. The values of this array will be used
-	 * to fill the wildcard segments of the route URI.
-	 *
 	 * <code>
 	 *		// Create a URL to the "profile" named route
 	 *		$url = URL::to_route('profile');
@@ -120,7 +147,7 @@ class URL {
 	 */
 	public static function to_route($name, $parameters = array(), $https = false)
 	{
-		if ( ! is_null($route = Routing\Router::find($name)))
+		if (is_null($route = Routing\Router::find($name)))
 		{
 			throw new \Exception("Error creating URL for undefined route [$name].");
 		}
@@ -141,12 +168,24 @@ class URL {
 			$uri = preg_replace('/\(.+?\)/', $parameter, $uri, 1);
 		}
 
-		// If there are any remaining optional place-holders, we will just replace
+		// If there are any remaining optional place-holders, we'll just replace
 		// them with empty strings since not every optional parameter has to be
 		// in the array of parameters that were passed into the method.
 		$uri = str_replace(array('/(:any?)', '/(:num?)'), '', $uri);
 
 		return static::to($uri, $https);
+	}
+
+	/**
+	 * Generate a HTTPS URL from a route name.
+	 *
+	 * @param  string  $name
+	 * @param  array   $parameters
+	 * @return string
+	 */
+	public static function to_secure_route($name, $parameters = array())
+	{
+		return static::to_route($name, $parameters, true);
 	}
 
 }

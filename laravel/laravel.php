@@ -1,68 +1,26 @@
 <?php namespace Laravel;
 
 /**
- * Bootstrap the core framework components like the IoC container,
- * configuration class, and the class auto-loader. Once this file
+ * Bootstrap the core framework components like the IoC container and
+ * the configuration class, and the class auto-loader. Once this file
  * has run, the framework is essentially ready for use.
  */
 require 'core.php';
 
 /**
- * Register the default timezone for the application. This will be
- * the default timezone used by all date / timezone functions in
+ * Register the default timezone for the application. This will be the
+ * default timezone used by all date / timezone functions throughout
  * the entire application.
  */
 date_default_timezone_set(Config::get('application.timezone'));
-
-/**
- * Create the exception logging function. All of the error logging
- * is routed through here to avoid duplicate code. This Closure
- * will determine if the actual logging Closure should be called.
- */
-$logger = function($exception)
-{
-	if (Config::get('error.log'))
-	{
-		call_user_func(Config::get('error.logger'), $exception);
-	}
-};
-
-/**
- * Create the exception handler function. All of the error handlers
- * registered by the framework call this closure to avoid duplicate
- * code. This Closure will pass the exception to the developer
- * defined handler in the configuration file.
- */
-$handler = function($exception) use ($logger)
-{
-	$logger($exception);
-
-	if (Config::get('error.detail'))
-	{
-		echo "<html><h2>Unhandled Exception</h2>
-			  <h3>Message:</h3>
-			  <pre>".$exception->getMessage()."</pre>
-			  <h3>Location:</h3>
-			  <pre>".$exception->getFile()." on line ".$exception->getLine()."</pre>
-			  <h3>Stack Trace:</h3>
-			  <pre>".$exception->getTraceAsString()."</pre></html>";
-	}
-	else
-	{
-		Response::error('500')->send();
-	}
-
-	exit(1);
-};
-
 /**
  * Register the PHP exception handler. The framework throws exceptions
  * on every error that cannot be handled. All of those exceptions will
  * be sent through this closure for processing.
  */
-set_exception_handler(function($exception) use ($handler)
+set_exception_handler(function($e)
 {
-	$handler($exception);
+	Error::exception($e);
 });
 
 /**
@@ -72,18 +30,9 @@ set_exception_handler(function($exception) use ($handler)
  * errors are ignored and errors in the developer configured whitelist
  * are silently logged.
  */
-set_error_handler(function($code, $error, $file, $line) use ($logger)
+set_error_handler(function($code, $error, $file, $line)
 {
-	if (error_reporting() === 0) return;
-
-	$exception = new \ErrorException($error, $code, 0, $file, $line);
-
-	if (in_array($code, Config::get('error.ignore')))
-	{
-		return $logger($exception);
-	}
-
-	throw $exception;
+	Error::error($code, $error, $file, $line);
 });
 
 /**
@@ -92,14 +41,9 @@ set_error_handler(function($code, $error, $file, $line) use ($logger)
  * has occured, we will convert it to an ErrorException and pass it
  * to the common exception handler for the framework.
  */
-register_shutdown_function(function() use ($handler)
+register_shutdown_function(function()
 {
-	if ( ! is_null($error = error_get_last()))
-	{
-		extract($error, EXTR_SKIP);
-
-		$handler(new \ErrorException($message, $type, 0, $file, $line));
-	}	
+	Error::shutdown();
 });
 
 /**
@@ -130,8 +74,8 @@ if (Config::get('session.driver') !== '')
 
 /**
  * Gather the input to the application based on the current request.
- * The input will be gathered based on the current request method and
- * will be set on the Input manager.
+ * The input will be gathered based on the current request method
+ * and will be set on the Input manager.
  */
 $input = array();
 
@@ -203,6 +147,11 @@ if ( ! is_null($bundle) and Bundle::routable($bundle))
  * instance. If no route is found, the 404 response will be returned
  * to the browser.
  */
+if (count(URI::$segments) > 15)
+{
+	throw new \Exception("Invalid request. Too many URI segments.");
+}
+
 Request::$route = Routing\Router::route(Request::method(), URI::current());
 
 if ( ! is_null(Request::$route))
