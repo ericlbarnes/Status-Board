@@ -24,6 +24,8 @@ header {
 	padding:8px 0px 8px 8px;
 }
 
+header:hover{cursor: move}
+
 .content {
 	padding: 20px 2px 0;
 	padding: 5px 0;
@@ -42,6 +44,10 @@ header {
 	height: 300px;
 }
 .large {
+	width: 91.5%;
+}
+.extralarge {
+	height: 300px;
 	width: 91.5%;
 }
 

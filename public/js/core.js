@@ -9,6 +9,8 @@ $(document).ready(function() {
 		placeholder: "ui-state-highlight",
 		opacity: 0.35,
 		distance: 30,
+		handle: 'header',
+		cursor: 'move',
 		forcePlaceholderSize: true,
 		items: 'section',
 		revert: true
