@@ -1,0 +1,31 @@
+.twitter ul {
+	height: 142px;
+	overflow: auto;
+	list-style: none;
+	list-style-image: none;
+	padding: 0;
+	margin: 0;
+}
+.twitter ul li:first-child {
+	border-top: none;
+}
+.twitter li {
+	padding: 9px 10px;
+	border-bottom: 1px solid #111;
+	border-top: 1px solid #666667;
+	height: auto;
+	padding: 10px;
+	position: relative;
+	line-height: 120%;
+}
+.twitter .msg {
+	float: left;
+	min-width: 150px;
+	width: 75%;
+}
+.twitter .name {
+	float: right;
+	color: #FFA84C;
+	text-align: left;
+	width: 20%;
+}

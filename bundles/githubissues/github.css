@@ -1,0 +1,39 @@
+.github ul {
+	height: 142px;
+	overflow: hidden;
+	list-style: none;
+	list-style-image: none;
+	padding: 0;
+	margin: 0;
+}
+.github ul li:first-child {
+	border-top: none;
+}
+.github li {
+	padding: 9px 10px;
+	border-bottom: 1px solid #111;
+	border-top: 1px solid #666667;
+	height: auto;
+	padding: 10px;
+	position: relative;
+	line-height: 120%;
+}
+.github .msg {
+	float: left;
+}
+.github .name {
+	float: right;
+	color: #FFA84C;
+}
+.github_medium .name {
+	float: right;
+}
+.github_medium .name:after {
+	color: #fff;
+	content:" | ";
+}
+.github_medium .date {
+	float: right;
+	color: #fff;
+	padding: 0 5px 0 3px;
+}

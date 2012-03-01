@@ -1,0 +1,15 @@
+Name: RSS Feed widget
+
+Author: Jeff Madsen (www.codebyjeff.com)
+
+Date: 2012-01-10
+
+Version: 1.0
+
+This widget allow you to create a simple rss feed and configure the number of posts you'd like to display.
+
+In the main application/views/home/index.php, add:
+
+<section class="small" data-site="The Onion" data-url="http://feeds.theonion.com/theonion/daily" data-feedcount="5" data-widget="rss"></section>
+
+
