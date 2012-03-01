@@ -34,6 +34,7 @@
 */
 
 Route::controller('home');
+Route::get('(:any)', 'home@index');
 
 /*
 Route::get('/, home', function()
