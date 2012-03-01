@@ -12,10 +12,11 @@ class Error {
 	{
 		static::log($exception);
 
+		ob_end_clean();
+
 		// If detailed errors are enabled, we'll just format the exception into
 		// a simple error message and display it on the screen. We don't use a
-		// View in case the problem is in the View class itself so we can not
-		// run into a white screen of death situation.
+		// View in case the problem is in the View class.
 		if (Config::get('error.detail'))
 		{
 			echo "<html><h2>Unhandled Exception</h2>
@@ -26,9 +27,15 @@ class Error {
 				  <h3>Stack Trace:</h3>
 				  <pre>".$exception->getTraceAsString()."</pre></html>";
 		}
+
+		// If we're not using detailed error messages, we'll use the event
+		// system to get the response that should be sent to the browser.
+		// Using events gives the developer more freedom.
 		else
 		{
-			Response::error('500')->send();
+			$response = Event::first('500');
+
+			return Response::prepare($response)->send();
 		}
 
 		exit(1);
@@ -43,19 +50,20 @@ class Error {
 	 * @param  int     $line
 	 * @return void
 	 */
-	public static function error($code, $error, $file, $line)
+	public static function native($code, $error, $file, $line)
 	{
 		if (error_reporting() === 0) return;
 
 		// For a PHP error, we'll create an ErrorExcepetion and then feed that
 		// exception to the exception method, which will create a simple view
-		// of the exception details. The ErrorException class is built-in to
-		// PHP for converting native errors to Exceptions.
+		// of the exception details for the developer.
 		$exception = new \ErrorException($error, $code, 0, $file, $line);
 
 		if (in_array($code, Config::get('error.ignore')))
 		{
 			return static::log($exception);
+
+			return true;
 		}
 
 		static::exception($exception);
@@ -70,8 +78,10 @@ class Error {
 	{
 		// If a fatal error occured that we have not handled yet, we will
 		// create an ErrorException and feed it to the exception handler,
-		// as it will not have been handled by the error handler.
-		if ( ! is_null($error = error_get_last()))
+		// as it will not yet have been handled.
+		$error = error_get_last();
+
+		if ( ! is_null($error))
 		{
 			extract($error, EXTR_SKIP);
 

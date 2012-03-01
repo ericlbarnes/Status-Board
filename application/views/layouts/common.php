@@ -17,16 +17,18 @@
 	<link rel="stylesheet" media="screen" href="<?php echo URL::to_asset('themes/'.$theme.'/style.css'); ?>">
 </head>
 <body>
-	<div id="wrapper" class="clearfix sortable">
-<?php if (count($widgets)): ?>
-	<?php foreach ($widgets as $key => $widget): ?>
-		<?php if(is_array($widget) && isset($widget['class']) && isset($widget['widget'])): ?>
-		<section class="<?php echo $widget['class'];?>" <?php if (isset($widget['interval'])):?>data-interval="<?php echo $widget['interval'];?>" <?php endif;?>data-config="<?php echo $key;?>" data-widget="<?php echo $widget['widget'];?>"></section>
-		<?php endif;?>
-	<?php endforeach;?>
-<?php else:?>
-		<div class="error">Error: There are no board settings setup</div>
-<?php endif;?>
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<?php if (count($widgets)): ?>
+				<?php foreach ($widgets as $key => $widget): ?>
+					<?php if(is_array($widget) && isset($widget['class']) && isset($widget['widget'])): ?>
+					<section class="<?php echo $widget['class'];?>" <?php if (isset($widget['interval'])):?>data-interval="<?php echo $widget['interval'];?>" <?php endif;?>data-config="<?php echo $key;?>" data-widget="<?php echo $widget['widget'];?>"></section>
+					<?php endif;?>
+				<?php endforeach;?>
+			<?php else:?>
+					<div class="error">Error: There are no board settings setup</div>
+			<?php endif;?>
+		</div>
 	</div>
 	<script>
 		var SITE_URL = "<?php echo URL::to(); ?>";
