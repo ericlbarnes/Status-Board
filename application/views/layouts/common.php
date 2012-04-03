@@ -17,7 +17,7 @@
 	<link rel="stylesheet" media="screen" href="<?php echo URL::to_asset('themes/'.$theme.'/style.css'); ?>">
 </head>
 <body>
-	<div class="container-fluid">
+	<div class="container-fluid sortable">
 		<div class="row-fluid">
 			<?php if (count($widgets)): ?>
 				<?php foreach ($widgets as $key => $widget): ?>
