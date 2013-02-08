@@ -36,7 +36,16 @@ Since the application is built on Laravel, a PHP framework, the requirements are
 
 ## Installation and Usage
 
-Installation is very easy. Upload the files to your server and visit http://example.com/index.php. All of the default widgets should load. To manage widgets, edit `application/config/widgets.php`. The application also supports the creation of multiple boards. These are configured in `application/config/boards.php` and you'll need to register another route in `application/routes.php`.
+Installation is very easy. Upload the files to your server and visit
+http://example.com/index.php. All of the default widgets should
+load. To manage widgets, edit `application/config/widgets.php`. The
+application also supports the creation of multiple boards. These are
+configured in `application/config/boards.php` and you'll need to
+register another route in `application/routes.php`.
+
+Widgets are being transitioned into bundles, so the files in
+`widgets/` and `bundles/` will look similar if not the same. Only
+changes to the files in `bundles/` will be reflected in the boards.
 
 Remember, this is alpha code so use at your own risk.
 
