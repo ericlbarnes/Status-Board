@@ -72,6 +72,10 @@ class Pingdom {
 		if (is_array($results)) {
 			$totalresults = count($results);
 			for ($x=0; $x < $totalresults; $x++) {
+                // default to check creation time if no downtime has occured
+                if (!isset($results[$x]->lasterrortime)) {
+                   $results[$x]->lasterrortime = $results[$x]->created;
+                }
 				$lasterrortime = $this->elapsedTime($results[$x]->lasterrortime);
 				$results[$x]->lasterrortime_pretty = $this->elapsedTimeString($lasterrortime);
 
