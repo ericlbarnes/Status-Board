@@ -11,7 +11,7 @@
 		<li class="clearfix">
 			<div class="msg <?php echo $item->status;?>">
 				<a href="http://<?php echo $item->hostname;?>" title="<?php echo $item->name;?>"><?php echo $item->hostname;?></a>
-				<div class="b-server-time clrfix">
+				<div class="b-server-time clearfix">
 					<div class="b-server-downtime">
 						<div class="t-size-x11 t-small">Last downtime</div>
 						<div class="t-size-x18 t-main"><?php echo $item->lasterrortime_pretty;?></div>
@@ -21,7 +21,7 @@
 						<div class="t-size-x18 t-main"><?php echo $item->lastresponsetime;?>ms</div>
 					</div>
 				</div>
-				<div class="b-server-time clrfix">
+				<div class="b-server-time clearfix">
 					<div class="b-server-downtime">
 						<div class="t-size-x11 t-small">Last test</div>
 						<div class="t-size-x18 t-main"><?php echo $item->lasttesttime_pretty;?></div>
